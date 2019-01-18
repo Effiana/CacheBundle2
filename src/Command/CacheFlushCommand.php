@@ -11,7 +11,6 @@
 
 namespace Effiana\CacheBundle\Command;
 
-use Effiana\Taggable\TaggablePoolInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
@@ -122,11 +121,7 @@ EOD
     {
         /** @type \Psr\Cache\CacheItemPoolInterface $service */
         $service = $this->getContainer()->get($serviceId);
-        if ($service instanceof TaggablePoolInterface) {
-            return $service->clearTags([$type]);
-        } else {
-            return $service->clear();
-        }
+        return $service->clear();
     }
 
     /**

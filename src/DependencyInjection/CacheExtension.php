@@ -11,7 +11,7 @@
 
 namespace Effiana\CacheBundle\DependencyInjection;
 
-use Effiana\Bridge\Doctrine\DoctrineCacheBridge;
+use Effiana\CacheBundle\Bridge\Doctrine\DoctrineCacheBridge;
 use Effiana\CacheBundle\Bridge\SymfonyValidatorBridge;
 use Effiana\CacheBundle\Command\CacheFlushCommand;
 use Effiana\CacheBundle\Factory\DoctrineBridgeFactory;
@@ -101,7 +101,7 @@ class CacheExtension extends Extension
      */
     private function verifyDoctrineBridgeExists($name)
     {
-        if (!class_exists('Cache\Bridge\Doctrine\DoctrineCacheBridge')) {
+        if (!class_exists(DoctrineCacheBridge::class)) {
             throw new \Exception(
                 sprintf(
                     'You need the DoctrineCacheBridge to be able to use "%s". Please run "composer require cache/psr-6-doctrine-bridge" to install the missing dependency.',

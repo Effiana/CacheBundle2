@@ -11,8 +11,8 @@
 
 namespace Effiana\CacheBundle\Cache;
 
-use Effiana\TagInterop\TaggableCacheItemInterface;
-use Effiana\TagInterop\TaggableCacheItemPoolInterface;
+use Effiana\CacheBundle\TagInterop\TaggableCacheItemInterface;
+use Effiana\CacheBundle\TagInterop\TaggableCacheItemPoolInterface;
 use Psr\Cache\CacheItemInterface;
 
 /**

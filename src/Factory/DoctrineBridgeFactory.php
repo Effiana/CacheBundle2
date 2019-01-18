@@ -11,9 +11,9 @@
 
 namespace Effiana\CacheBundle\Factory;
 
-use Effiana\Bridge\Doctrine\DoctrineCacheBridge;
+use Effiana\CacheBundle\Bridge\Doctrine\DoctrineCacheBridge;
 use Effiana\CacheBundle\Cache\FixedTaggingCachePool;
-use Effiana\Prefixed\PrefixedCachePool;
+use Effiana\CacheBundle\Prefixed\PrefixedCachePool;
 use Effiana\CacheBundle\Taggable\TaggablePSR6PoolAdapter;
 use Psr\Cache\CacheItemPoolInterface;
 

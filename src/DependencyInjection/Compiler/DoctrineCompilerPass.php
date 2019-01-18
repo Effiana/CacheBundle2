@@ -11,7 +11,7 @@
 
 namespace Effiana\CacheBundle\DependencyInjection\Compiler;
 
-use Effiana\Bridge\Doctrine\DoctrineCacheBridge;
+use Effiana\CacheBundle\Bridge\Doctrine\DoctrineCacheBridge;
 use Effiana\CacheBundle\Factory\DoctrineBridgeFactory;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;

@@ -12,7 +12,7 @@
 namespace Effiana\CacheBundle\Routing;
 
 use Effiana\CacheBundle\KeyNormalizer;
-use Effiana\TagInterop\TaggableCacheItemInterface;
+use Effiana\CacheBundle\TagInterop\TaggableCacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouterInterface;
