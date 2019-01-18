@@ -19,7 +19,7 @@ use Effiana\CacheBundle\Factory\RouterFactory;
 use Effiana\CacheBundle\Factory\SessionHandlerFactory;
 use Effiana\CacheBundle\Factory\ValidationFactory;
 use Effiana\CacheBundle\Routing\CachingRouter;
-use Effiana\SessionHandler\Psr6SessionHandler;
+use Effiana\CacheBundle\SessionHandler\Psr6SessionHandler;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;

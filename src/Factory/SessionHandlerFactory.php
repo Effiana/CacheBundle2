@@ -12,8 +12,8 @@
 namespace Effiana\CacheBundle\Factory;
 
 use Effiana\CacheBundle\Cache\FixedTaggingCachePool;
-use Effiana\SessionHandler\Psr6SessionHandler;
-use Effiana\Taggable\TaggablePSR6PoolAdapter;
+use Effiana\CacheBundle\SessionHandler\Psr6SessionHandler;
+use Effiana\CacheBundle\Taggable\TaggablePSR6PoolAdapter;
 use Psr\Cache\CacheItemPoolInterface;
 
 /**

@@ -14,7 +14,7 @@ namespace Effiana\CacheBundle\Factory;
 use Effiana\CacheBundle\Bridge\SymfonyValidatorBridge;
 use Effiana\CacheBundle\Cache\FixedTaggingCachePool;
 use Effiana\Prefixed\PrefixedCachePool;
-use Effiana\Taggable\TaggablePSR6PoolAdapter;
+use Effiana\CacheBundle\Taggable\TaggablePSR6PoolAdapter;
 use Psr\Cache\CacheItemPoolInterface;
 
 /**

@@ -15,7 +15,7 @@ use Effiana\Bridge\Doctrine\DoctrineCacheBridge;
 use Effiana\CacheBundle\Bridge\SymfonyValidatorBridge;
 use Effiana\CacheBundle\CacheBundle;
 use Effiana\CacheBundle\Routing\CachingRouter;
-use Effiana\SessionHandler\Psr6SessionHandler;
+use Effiana\CacheBundle\SessionHandler\Psr6SessionHandler;
 use Nyholm\BundleTest\BaseBundleTestCase;
 use Symfony\Component\HttpKernel\Kernel;
 
