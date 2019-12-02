@@ -31,9 +31,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('cache');
-        $rootNode    = $treeBuilder->getRootNode();
-
-        $treeBuilder->children()
+        $treeBuilder->getRootNode()
             ->append($this->addSessionSupportSection())
             ->append($this->addDoctrineSection())
             ->append($this->addRouterSection())
@@ -57,19 +55,19 @@ class Configuration implements ConfigurationInterface
     private function normalizeEnabled(NodeDefinition $node)
     {
         $node->beforeNormalization()
-                ->always()
-                ->then(
-                    function ($v) {
-                        if (is_string($v['enabled'])) {
-                            $v['enabled'] = $v['enabled'] === 'true';
-                        }
-                        if (is_int($v['enabled'])) {
-                            $v['enabled'] = $v['enabled'] === 1;
-                        }
-
-                        return $v;
+            ->always()
+            ->then(
+                function ($v) {
+                    if (is_string($v['enabled'])) {
+                        $v['enabled'] = $v['enabled'] === 'true';
                     }
-                )
+                    if (is_int($v['enabled'])) {
+                        $v['enabled'] = $v['enabled'] === 1;
+                    }
+
+                    return $v;
+                }
+            )
             ->end();
 
         return $this;
@@ -82,17 +80,17 @@ class Configuration implements ConfigurationInterface
      */
     private function addSessionSupportSection()
     {
-        $tree = new TreeBuilder();
-        $node = $tree->root('session');
+        $tree = new TreeBuilder('session');
+        $node = $tree->getRootNode();
 
         $node
             ->canBeEnabled()
             ->addDefaultsIfNotSet()
             ->children()
-                ->scalarNode('service_id')->isRequired()->end()
-                ->booleanNode('use_tagging')->defaultTrue()->end()
-                ->scalarNode('prefix')->defaultValue('session_')->end()
-                ->scalarNode('ttl')->end()
+            ->scalarNode('service_id')->isRequired()->end()
+            ->booleanNode('use_tagging')->defaultTrue()->end()
+            ->scalarNode('prefix')->defaultValue('session_')->end()
+            ->scalarNode('ttl')->end()
             ->end();
 
         $this->normalizeEnabled($node);
@@ -107,16 +105,16 @@ class Configuration implements ConfigurationInterface
      */
     private function addSerializerSection()
     {
-        $tree = new TreeBuilder();
-        $node = $tree->root('serializer');
+        $tree = new TreeBuilder('serializer');
+        $node = $tree->getRootNode();
 
         $node
             ->canBeEnabled()
             ->addDefaultsIfNotSet()
             ->children()
             ->scalarNode('service_id')->isRequired()->end()
-                ->booleanNode('use_tagging')->defaultTrue()->end()
-                ->scalarNode('prefix')->defaultValue('')->end()
+            ->booleanNode('use_tagging')->defaultTrue()->end()
+            ->scalarNode('prefix')->defaultValue('')->end()
             ->end();
 
         $this->normalizeEnabled($node);
@@ -131,16 +129,16 @@ class Configuration implements ConfigurationInterface
      */
     private function addValidationSection()
     {
-        $tree = new TreeBuilder();
-        $node = $tree->root('validation');
+        $tree = new TreeBuilder('validation');
+        $node = $tree->getRootNode();
 
         $node
             ->canBeEnabled()
             ->addDefaultsIfNotSet()
             ->children()
-                ->scalarNode('service_id')->isRequired()->end()
-                ->booleanNode('use_tagging')->defaultTrue()->end()
-                ->scalarNode('prefix')->defaultValue('')->end()
+            ->scalarNode('service_id')->isRequired()->end()
+            ->booleanNode('use_tagging')->defaultTrue()->end()
+            ->scalarNode('prefix')->defaultValue('')->end()
             ->end();
 
         $this->normalizeEnabled($node);
@@ -155,16 +153,16 @@ class Configuration implements ConfigurationInterface
      */
     private function addAnnotationSection()
     {
-        $tree = new TreeBuilder();
-        $node = $tree->root('annotation');
+        $tree = new TreeBuilder('annotation');
+        $node = $tree->getRootNode();
 
         $node
             ->canBeEnabled()
             ->addDefaultsIfNotSet()
             ->children()
-                ->scalarNode('service_id')->isRequired()->end()
-                ->booleanNode('use_tagging')->defaultTrue()->end()
-                ->scalarNode('prefix')->defaultValue('')->end()
+            ->scalarNode('service_id')->isRequired()->end()
+            ->booleanNode('use_tagging')->defaultTrue()->end()
+            ->scalarNode('prefix')->defaultValue('')->end()
             ->end();
 
         $this->normalizeEnabled($node);
@@ -177,15 +175,15 @@ class Configuration implements ConfigurationInterface
      */
     private function addLoggingSection()
     {
-        $tree = new TreeBuilder();
-        $node = $tree->root('logging');
+        $tree = new TreeBuilder('logging');
+        $node = $tree->getRootNode();
 
         $node
             ->canBeEnabled()
             ->addDefaultsIfNotSet()
             ->children()
-                ->scalarNode('logger')->defaultValue('logger')->end()
-                ->scalarNode('level')->defaultValue('info')->end()
+            ->scalarNode('logger')->defaultValue('logger')->end()
+            ->scalarNode('level')->defaultValue('info')->end()
             ->end();
 
         $this->normalizeEnabled($node);
@@ -200,16 +198,16 @@ class Configuration implements ConfigurationInterface
      */
     private function addDoctrineSection()
     {
-        $tree = new TreeBuilder();
-        $node = $tree->root('doctrine');
+        $tree = new TreeBuilder('doctrine');
+        $node = $tree->getRootNode();
 
         $node
             ->canBeEnabled()
             ->addDefaultsIfNotSet()
             ->children()
-                ->booleanNode('use_tagging')
-                    ->defaultTrue()
-                ->end()
+            ->booleanNode('use_tagging')
+            ->defaultTrue()
+            ->end()
             ->end();
 
         $this->normalizeEnabled($node);
@@ -217,35 +215,35 @@ class Configuration implements ConfigurationInterface
         $types = ['metadata', 'result', 'query'];
         foreach ($types as $type) {
             $node->children()
-                    ->arrayNode($type)
-                        ->canBeUnset()
-                        ->children()
-                            ->scalarNode('service_id')->isRequired()->end()
-                            ->arrayNode('entity_managers')
-                                ->defaultValue([])
-                                ->beforeNormalization()
-                                    ->ifString()
-                                    ->then(
-                                        function ($v) {
-                                            return (array) $v;
-                                        }
-                                    )
-                                    ->end()
-                                    ->prototype('scalar')->end()
-                                ->end()
-                            ->arrayNode('document_managers')
-                                ->defaultValue([])
-                                ->beforeNormalization()
-                                    ->ifString()
-                                    ->then(
-                                        function ($v) {
-                                            return (array) $v;
-                                        }
-                                    )
-                                ->end()
-                                ->prototype('scalar')->end()
-                            ->end()
-                    ->end()
+                ->arrayNode($type)
+                ->canBeUnset()
+                ->children()
+                ->scalarNode('service_id')->isRequired()->end()
+                ->arrayNode('entity_managers')
+                ->defaultValue([])
+                ->beforeNormalization()
+                ->ifString()
+                ->then(
+                    function ($v) {
+                        return (array) $v;
+                    }
+                )
+                ->end()
+                ->prototype('scalar')->end()
+                ->end()
+                ->arrayNode('document_managers')
+                ->defaultValue([])
+                ->beforeNormalization()
+                ->ifString()
+                ->then(
+                    function ($v) {
+                        return (array) $v;
+                    }
+                )
+                ->end()
+                ->prototype('scalar')->end()
+                ->end()
+                ->end()
                 ->end();
         }
 
@@ -259,21 +257,21 @@ class Configuration implements ConfigurationInterface
      */
     private function addRouterSection()
     {
-        $tree = new TreeBuilder();
-        $node = $tree->root('router');
+        $tree = new TreeBuilder('router');
+        $node = $tree->getRootNode();
 
         $node
             ->canBeEnabled()
             ->addDefaultsIfNotSet()
             ->children()
-                ->integerNode('ttl')
-                    ->defaultValue(604800)
-                ->end()
-                ->scalarNode('service_id')
-                    ->isRequired()
-                ->end()
-                ->booleanNode('use_tagging')->defaultTrue()->end()
-                ->scalarNode('prefix')->defaultValue('')->end()
+            ->integerNode('ttl')
+            ->defaultValue(604800)
+            ->end()
+            ->scalarNode('service_id')
+            ->isRequired()
+            ->end()
+            ->booleanNode('use_tagging')->defaultTrue()->end()
+            ->scalarNode('prefix')->defaultValue('')->end()
             ->end();
 
         $this->normalizeEnabled($node);
@@ -286,14 +284,14 @@ class Configuration implements ConfigurationInterface
      */
     private function addDataCollectorSection()
     {
-        $tree = new TreeBuilder();
-        $node = $tree->root('data_collector');
+        $tree = new TreeBuilder('data_collector');
+        $node = $tree->getRootNode();
 
         $node
             ->canBeEnabled()
             ->addDefaultsIfNotSet()
             ->children()
-                ->booleanNode('enabled')->end()
+            ->booleanNode('enabled')->end()
             ->end();
 
         $this->normalizeEnabled($node);
